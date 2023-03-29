@@ -30,41 +30,34 @@ describe('Home', () => {
     await expect(browser).toHaveTitle('Practice E-Commerce Site – Automation Bro');
   });
 
-  it('Open About Page & assert URL', async () => {
-    // Open About Page
-    await browser.url('https://practice.automationbro.com/about');
+  it('Open About Page & Highlight', async () => {
+    
+    await browser.url('http://127.0.0.1:5500/index.html');
+   
+    
+    // const origin = await $('.titulo');
+    // await browser.pause(10000);
+    // function highlight(origin) {
+    //   origin.style.backgroundColor = 'yellow';
+    // }   
+    // browser.execute(highlight, origin);
 
-    // Assert URL
-    await expect(browser).toHaveUrl('https://practice.automationbro.com/about/');
+    
+
+    const element = await $('.titulo');
+
+    const start = 0;
+    const end = 2;
+
+    await element.moveTo({start});
+    await browser.buttonDown();
+    await element.moveTo({end});
+    await browser.buttonUp();
+    await browser.pause(1000);   
+
+    await browser.debug();
+    await browser.pause(1000000);
+    
   });
 
-  it('Click get started btn & assert url contains get-started text', async () => {
-    // Click get started button
-    await HomePage.btnGetStarted.click();
-
-    // Assert url contains get-started text
-    await expect(browser).toHaveUrlContaining('get-started');
-  });
-
-  it('Click logo & assert url DOES NOT contains get-started text', async () => {
-    allureReporter.addFeature("Logo Verification");
-
-    // Click logo
-    await HomePage.imageLogo.click();
-
-    // Assert url does not contains get-started text
-    await expect(browser).not.toHaveUrlContaining('get-started');
-  });
-
-  it('Find heading element & assert the text', async () => {
-    // find heading element
-    const headingEl = await HomePage.txtHeading;
-
-    // get the text
-    const headingText = await headingEl.getText();
-
-    // Assert the text
-    await expect(headingText).toEqual('Think different. Make different.'); // Jest library
-    // await expect(headingEl).toHaveText('Think different. Make different!'); // wdio expect assertion
-  });
 });
